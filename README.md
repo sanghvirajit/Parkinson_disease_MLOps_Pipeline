@@ -145,17 +145,27 @@ mlflow: http://localhost:5000
 
 Mage is employed for the orchestration. Mage can be access at ```bash http://localhost:5000 ```. Under the Pipelines, 4 Pipelines for the training of Linear Regression, Logistic Regression, XGBoost and CatBoost are implemented.
 
+![Example Image](assets/348294696-c1a9f837-9fb3-4ff1-9c55-6a353e36a898.png)
+
+Example pipeline blocks for the CatBoost Model:
+
+![Example Image](assets/348294929-c01fb212-6915-404b-a1bb-36ef79ea5260.png)
 
 # MLFlow expriements
 
 Linear Regression, Logistic Regression, XGBoost and CatBoost models were tested. The main focus of the project was not to find the best model but to work on the best MLOps technologies so the best model amoung the 4 was choosen. CatBoost was not anyway giving bad results. The Accuracy of the CatBoost Model is 96% with RMSE of 0.20.
 
+Mage is source in the MLFlow experiement tracking.
+
+![Example Image](assets/348295413-ce88f6c8-ed77-441f-85a2-afb2f196006e.png)
+
 All the experiements were logged in the MLFLOW which can be access at ```bash http://localhost:5000 ```. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
 
 CatBoost Model can be find under "Production" tag and XGBoost Model can be find under "Staging".
 
+![Example Image](assets/348295791-d0158de8-5963-4e35-997d-505e09df7022.png)
 
-### Save the Artifacts of the best model from the MLFlow Registry to S3 Bucket on AWS
+# Save the Artifacts of the best model from the MLFlow Registry to S3 Bucket on AWS
 
 The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bucket of the AWS, from where it will be loaded later.
 
