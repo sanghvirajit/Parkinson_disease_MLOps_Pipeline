@@ -145,21 +145,37 @@ mlflow: http://localhost:5000
 
 Mage is employed for the orchestration. Mage can be access at ```bash http://localhost:5000 ```. Under the Pipelines, 4 Pipelines for the training of Linear Regression, Logistic Regression, XGBoost and CatBoost are implemented.
 
+![image](https://github.com/user-attachments/assets/c1a9f837-9fb3-4ff1-9c55-6a353e36a898)
+
+Example blocks for the training for CatBoost Model
+
+![image](https://github.com/user-attachments/assets/c01fb212-6915-404b-a1bb-36ef79ea5260)
+
+
+
+
+
 
 # MLFlow expriements
 
 Linear Regression, Logistic Regression, XGBoost and CatBoost models were tested. The main focus of the project was not to find the best model but to work on the best MLOps technologies so the best model amoung the 4 was choosen. CatBoost was not anyway giving bad results. The Accuracy of the CatBoost Model is 96% with RMSE of 0.20.
 
-All the experiements were logged in the MLFLOW which can be access at ```bash http://localhost:5000 ```. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
+All the experiements were logged in the MLFLOW which can be access at ```bash http://localhost:5000 ```. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry. Source in the MLFlow for all experiment is Mage.
+
+![image](https://github.com/user-attachments/assets/ce88f6c8-ed77-441f-85a2-afb2f196006e)
+
 
 CatBoost Model can be find under "Production" tag and XGBoost Model can be find under "Staging".
 
+![image](https://github.com/user-attachments/assets/d0158de8-5963-4e35-997d-505e09df7022)
 
-### Save the Artifacts of the best model from the MLFlow Registry to S3 Bucket on AWS
 
-The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bucket of the AWS, from where it will be loaded later.
 
-save the RUN_ID of the best model as an enviroment variable
+# Save the Artifacts of the best model from the MLFlow Registry to S3 Bucket on AWS
+
+The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bucket of the AWS, from where it will be loaded for the prediction.
+
+RUN_ID of the best model can be saved as an enviroment variable as follow:
 
 ```bash
 export RUN_ID="6f4c13e86ae94d7a958349c35af3fbb1"
@@ -188,3 +204,15 @@ docker run -it --rm \
     -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
     parkinson-disease-prediction:latest
 ```
+
+to test the docker, run the following code.
+
+```bash
+python test.py
+```
+
+it will give the following results.
+
+<img width="616" alt="image" src="https://github.com/user-attachments/assets/8733603d-2c78-4b20-90e1-c383665c573c">
+
+
