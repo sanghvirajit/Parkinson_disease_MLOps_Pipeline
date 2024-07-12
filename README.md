@@ -141,14 +141,14 @@ mlflow: http://localhost:5000
 
 # Mage as Orchestration
 
-Mage is employed for the orchestration. Mage can be access at ´´´bash http://localhost:5000 ´´´. Under the Pipelines, 4 Pipelines for the training of Linear Regression, Logistic Regression, XGBoost and CatBoost are implemented.
+Mage is employed for the orchestration. Mage can be access at ```bash http://localhost:5000 ```. Under the Pipelines, 4 Pipelines for the training of Linear Regression, Logistic Regression, XGBoost and CatBoost are implemented.
 
 
 # MLFlow expriements
 
 Linear Regression, Logistic Regression, XGBoost and CatBoost models were tested. The main focus of the project was not to find the best model but to work on the best MLOps technologies so the best model amoung the 4 was choosen. CatBoost was not anyway giving bad results. The Accuracy of the CatBoost Model is 96% with RMSE of 0.20.
 
-All the experiements were logged in the MLFLOW which can be access at ´´´bash http://localhost:5000 ´´´. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
+All the experiements were logged in the MLFLOW which can be access at ```bash http://localhost:5000 ```. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
 
 CatBoost Model can be find under "Production" tag and XGBoost Model can be find under "Staging".
 
