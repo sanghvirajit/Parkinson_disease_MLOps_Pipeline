@@ -120,7 +120,9 @@ export AWS_DEFAULT_REGION="AWS_DEFAULT_REGION"
 
 MLFlow experiment name can be set as enviromental variable as follow:
 
+```bash
 export EXPERIMENT_NAME="parkinson-disease-prediction-experiment"
+```
 
 ## Running the Docker Compose
 
