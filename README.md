@@ -90,13 +90,13 @@ Prerequisite: Install Docker (Windows: Docker Desktop)
 
 Download repository from GitHub
 
-```bash 
+```bash
 git clone https://github.com/sanghvirajit/Parkinson-Disease---MLOps-Pipeline.git
 cd Parkinson-Disease---MLOps-Pipeline
 pip install -r requirements.txt
 ```
 
-Best Practices are used for linting and formatting. 
+Best Practices are used for linting and formatting.
 All the dependencies are written in the requirements.ci.txt. Lint section is also added in the Makefile
 
 Run the following code to use it
@@ -106,7 +106,7 @@ pip install -r requirements.ci.txt
 Make lint
 ```
 
-# AWS Cloud for streaming. 
+# AWS Cloud for streaming.
 
 AWS credentials can be set as Enviromental Variables as follow
 
@@ -148,7 +148,7 @@ Mage is employed for the orchestration. Mage can be access at ´´´bash http://
 
 Linear Regression, Logistic Regression, XGBoost and CatBoost models were tested. The main focus of the project was not to find the best model but to work on the best MLOps technologies so the best model amoung the 4 was choosen. CatBoost was not anyway giving bad results. The Accuracy of the CatBoost Model is 96% with RMSE of 0.20.
 
-All the experiements were logged in the MLFLOW which can be access at ´´´bash http://localhost:5000 ´´´. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry. 
+All the experiements were logged in the MLFLOW which can be access at ´´´bash http://localhost:5000 ´´´. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
 
 CatBoost Model can be find under "Production" tag and XGBoost Model can be find under "Staging".
 

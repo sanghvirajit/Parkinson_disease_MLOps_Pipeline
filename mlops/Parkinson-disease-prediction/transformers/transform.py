@@ -1,8 +1,8 @@
 from sklearn.model_selection import train_test_split
 
-if 'transformer' not in globals():
+if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
-if 'test' not in globals():
+if "test" not in globals():
     from mage_ai.data_preparation.decorators import test
 
 
@@ -23,29 +23,56 @@ def transform(df, *args, **kwargs):
     """
 
     numerical_columns = [
-    'Age', 'BMI', 'AlcoholConsumption', 'PhysicalActivity', 'DietQuality', 'SleepQuality', 
-    'SystolicBP', 'DiastolicBP', 'CholesterolTotal', 'CholesterolLDL', 'CholesterolHDL', 'CholesterolTriglycerides', 
-    'UPDRS', 'MoCA', 'FunctionalAssessment'
+        "Age",
+        "BMI",
+        "AlcoholConsumption",
+        "PhysicalActivity",
+        "DietQuality",
+        "SleepQuality",
+        "SystolicBP",
+        "DiastolicBP",
+        "CholesterolTotal",
+        "CholesterolLDL",
+        "CholesterolHDL",
+        "CholesterolTriglycerides",
+        "UPDRS",
+        "MoCA",
+        "FunctionalAssessment",
     ]
 
     categorical_columns = [
-        'Gender', 'Ethnicity', 'EducationLevel', 'Smoking',  'FamilyHistoryParkinsons',
-        'TraumaticBrainInjury', 'Hypertension', 'Diabetes', 'Depression', 'Stroke',
-        'Tremor', 'Rigidity', 'Bradykinesia', 'PosturalInstability', 'SpeechProblems',
-        'SleepDisorders', 'Constipation'
+        "Gender",
+        "Ethnicity",
+        "EducationLevel",
+        "Smoking",
+        "FamilyHistoryParkinsons",
+        "TraumaticBrainInjury",
+        "Hypertension",
+        "Diabetes",
+        "Depression",
+        "Stroke",
+        "Tremor",
+        "Rigidity",
+        "Bradykinesia",
+        "PosturalInstability",
+        "SpeechProblems",
+        "SleepDisorders",
+        "Constipation",
     ]
 
     # Changing the categorical column values dtype from int64 to str (object)
     df[categorical_columns] = df[categorical_columns].astype(str)
 
     X = df[numerical_columns + categorical_columns]
-    
+
     # Target variable -> y
-    target = 'Diagnosis'
+    target = "Diagnosis"
     y = df[target]
-    
+
     # Split the data into training and validation sets
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X, y, test_size=0.2, stratify=y, random_state=42
+    )
 
     return X_train, X_val, y_train, y_val
 
@@ -55,4 +82,4 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    assert output is not None, 'The output is undefined'
+    assert output is not None, "The output is undefined"

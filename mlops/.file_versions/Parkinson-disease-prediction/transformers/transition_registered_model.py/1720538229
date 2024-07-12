@@ -19,7 +19,7 @@ def transform(data, *args, **kwargs):
     Returns:
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
-    
+
     # Move the registered model to stage
     model_version = 1
     new_stage = "staging"

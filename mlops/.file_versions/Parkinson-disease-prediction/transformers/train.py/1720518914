@@ -49,7 +49,7 @@ def transform(data, *args, **kwargs):
     recall = recall_score(y_val, y_pred)
     f1 = f1_score(y_val, y_pred)
     rmse = root_mean_squared_error(y_val, y_pred)
-    
+
     return y_pred
 
 

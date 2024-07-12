@@ -1,8 +1,8 @@
 import pandas as pd
 
-if 'data_loader' not in globals():
+if "data_loader" not in globals():
     from mage_ai.data_preparation.decorators import data_loader
-if 'test' not in globals():
+if "test" not in globals():
     from mage_ai.data_preparation.decorators import test
 
 
@@ -14,10 +14,10 @@ def load_data(*args, **kwargs):
     Returns:
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
-    
+
     file_path = "data/parkinsons_disease_data.csv"
 
-    df = pd.read_csv(file_path)# Specify your data loading logic here
+    df = pd.read_csv(file_path)  # Specify your data loading logic here
 
     return df
 
@@ -27,4 +27,4 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    assert output is not None, 'The output is undefined'
+    assert output is not None, "The output is undefined"

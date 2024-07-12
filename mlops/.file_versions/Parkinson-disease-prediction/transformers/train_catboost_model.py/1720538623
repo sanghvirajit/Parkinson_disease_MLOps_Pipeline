@@ -28,7 +28,7 @@ def get_metrics(y_val, y_pred):
     rmse = root_mean_squared_error(y_val, y_pred)
 
     return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1, 'rmse': rmse}
-    
+
 @transformer
 def transform(data, *args, **kwargs):
     """
@@ -75,7 +75,7 @@ def transform(data, *args, **kwargs):
             y_pred_catboost = catboost.predict(X_val)
 
             metrics = get_metrics(y_val, y_pred_catboost)
-            
+
             mlflow.log_metric("accuracy", metrics["accuracy"])
             mlflow.log_metric("precision", metrics["precision"])
             mlflow.log_metric("recall", metrics["recall"])
@@ -83,8 +83,8 @@ def transform(data, *args, **kwargs):
             mlflow.log_metric("rmse", metrics["rmse"])
 
             # Log the model manually
-            mlflow.catboost.log_model(  catboost, 
-                                        artifact_path="models", 
+            mlflow.catboost.log_model(  catboost,
+                                        artifact_path="models",
                                 )
 
         return {'loss': metrics["accuracy"], 'status': STATUS_OK}

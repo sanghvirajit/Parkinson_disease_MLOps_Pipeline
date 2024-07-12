@@ -19,7 +19,7 @@ def transform(data, *args, **kwargs):
     Returns:
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
-    
+
     latest_versions = client.get_latest_versions(model_name, stages=["None"])
 
     for version in latest_versions:

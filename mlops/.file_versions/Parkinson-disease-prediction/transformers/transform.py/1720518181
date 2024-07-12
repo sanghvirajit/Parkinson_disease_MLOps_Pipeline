@@ -23,8 +23,8 @@ def transform(df, *args, **kwargs):
     """
 
     numerical_columns = [
-    'Age', 'BMI', 'AlcoholConsumption', 'PhysicalActivity', 'DietQuality', 'SleepQuality', 
-    'SystolicBP', 'DiastolicBP', 'CholesterolTotal', 'CholesterolLDL', 'CholesterolHDL', 'CholesterolTriglycerides', 
+    'Age', 'BMI', 'AlcoholConsumption', 'PhysicalActivity', 'DietQuality', 'SleepQuality',
+    'SystolicBP', 'DiastolicBP', 'CholesterolTotal', 'CholesterolLDL', 'CholesterolHDL', 'CholesterolTriglycerides',
     'UPDRS', 'MoCA', 'FunctionalAssessment'
     ]
 
@@ -39,11 +39,11 @@ def transform(df, *args, **kwargs):
     df[categorical_columns] = df[categorical_columns].astype(str)
 
     X = df[numerical_columns + categorical_columns]
-    
+
     # Target variable -> y
     target = 'Diagnosis'
     y = df[target].values
-    
+
     # Split the data into training and validation sets
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 

@@ -1,12 +1,11 @@
 from mlflow.tracking import MlflowClient
-from mlflow.entities import ViewType
 from datetime import datetime
 import mlflow
 
-if 'transformer' not in globals():
+if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
-if 'test' not in globals():
-    from mage_ai.data_preparation.decorators import test
+if "test" not in globals():
+    pass
 
 
 @transformer
@@ -24,12 +23,12 @@ def transform(data, *args, **kwargs):
     Returns:
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
-    
+
     mlflow.set_tracking_uri("http://mlflow:5000")
     mlflow.set_experiment("parkinson-disease-prediction-experiment")
 
     model_name = "parkinson-disease-prediction-experiment"
-    
+
     client = MlflowClient()
     latest_versions = client.get_latest_versions(model_name, stages=["None"])
 
@@ -42,12 +41,12 @@ def transform(data, *args, **kwargs):
         name=model_name,
         version=model_version,
         stage=new_stage,
-        archive_existing_versions=False
+        archive_existing_versions=False,
     )
 
     date = datetime.today().date()
     client.update_model_version(
         name=model_name,
         version=model_version,
-        description=f"The model version {model_version} was transitioned to {new_stage} on {date}."
+        description=f"The model version {model_version} was transitioned to {new_stage} on {date}.",
     )

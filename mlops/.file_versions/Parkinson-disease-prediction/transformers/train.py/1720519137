@@ -34,7 +34,7 @@ def transform(data, *args, **kwargs):
 
         mlflow.sklearn.autolog()
         mlflow.set_tag("model", "XGBoostClassifier")
-        
+
         X_train, X_val, y_train, y_val = data
 
         # Dicts
@@ -47,7 +47,7 @@ def transform(data, *args, **kwargs):
         X_val = dv.transform(val_dicts)
 
         # Loading the model
-        
+
         model = LinearRegression()
 
         # fit and train

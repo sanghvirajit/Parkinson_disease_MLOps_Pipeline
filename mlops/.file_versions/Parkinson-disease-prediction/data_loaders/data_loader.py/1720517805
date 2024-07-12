@@ -12,7 +12,7 @@ def load_data(*args, **kwargs):
     Returns:
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
-    
+
     file_path = "../data/parkinsons_disease_data.csv"
 
     df = pd.read_csv(filename)# Specify your data loading logic here

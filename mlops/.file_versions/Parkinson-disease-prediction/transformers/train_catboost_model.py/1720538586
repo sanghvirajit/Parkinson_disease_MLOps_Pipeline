@@ -28,8 +28,8 @@ def get_metrics(y_val, y_pred):
     rmse = root_mean_squared_error(y_val, y_pred)
 
     return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1, 'rmse': rmse}
-    
-    
+
+
 @transformer
 def transform(data, *args, **kwargs):
     """

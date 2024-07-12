@@ -24,7 +24,7 @@ def transform(*args, **kwargs):
     """
 
     EXPERIMENT_NAME = "parkinson-disease-prediction-experiment"
-    
+
     client = MlflowClient()
     experiment = client.get_experiment_by_name(EXPERIMENT_NAME)
     best_run = client.search_runs(
@@ -33,7 +33,7 @@ def transform(*args, **kwargs):
         max_results=1,
         order_by=["metrics.rmse asc"]
     )[0]
-    
+
     # register the best model
     run_id = best_run.info.run_id
     model_uri = f"runs:/{run_id}/model"

@@ -2,13 +2,14 @@ from mlflow.tracking import MlflowClient
 from mlflow.entities import ViewType
 import mlflow
 
-if 'transformer' not in globals():
+if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
-if 'test' not in globals():
-    from mage_ai.data_preparation.decorators import test
+if "test" not in globals():
+    pass
 
 mlflow.set_tracking_uri("http://mlflow:5000")
 mlflow.set_experiment("parkinson-disease-prediction-experiment")
+
 
 @transformer
 def transform(*args, **kwargs):
@@ -34,15 +35,14 @@ def transform(*args, **kwargs):
         experiment_ids=experiment.experiment_id,
         run_view_type=ViewType.ACTIVE_ONLY,
         max_results=1,
-        order_by=["metrics.rmse asc"]
+        order_by=["metrics.rmse asc"],
     )[0]
-    
+
     # register the best model
     run_id = best_run.info.run_id
     model_uri = f"runs:/{run_id}/model"
-    model_accuracy = round(best_run.data.metrics['accuracy']*100)
+    model_accuracy = round(best_run.data.metrics["accuracy"] * 100)
     model_details = mlflow.register_model(model_uri=model_uri, name=EXPERIMENT_NAME)
     client.update_registered_model(
-      name=model_details.name,
-      description=f"Current accuracy: {model_accuracy}%"
+        name=model_details.name, description=f"Current accuracy: {model_accuracy}%"
     )

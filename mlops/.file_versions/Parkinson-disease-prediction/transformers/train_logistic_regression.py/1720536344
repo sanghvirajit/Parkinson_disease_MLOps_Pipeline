@@ -31,7 +31,7 @@ def transform(data, *args, **kwargs):
     with mlflow.start_run():
 
         mlflow.sklearn.autolog()
-        
+
         X_train, X_val, y_train, y_val = prepare_data(df)
 
         # Dicts
@@ -53,7 +53,7 @@ def transform(data, *args, **kwargs):
         y_pred_continuous = logistic_regression_model.predict(X_val)
         # Threshold 0f 0.5, if probablity is greater than 0.5 --> 1 else 0
         y_pred = [1 if value > 0.5 else 0 for value in y_pred_continuous]
-        
+
         metrics = get_metrics(y_val, y_pred)
 
         mlflow.log_metric("accuracy", metrics["accuracy"])

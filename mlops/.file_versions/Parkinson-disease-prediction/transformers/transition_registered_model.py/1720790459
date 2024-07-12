@@ -28,7 +28,7 @@ def transform(data, *args, **kwargs):
     mlflow.set_experiment("parkinson-disease-prediction-experiment")
 
     model_name = "parkinson-disease-prediction-experiment"
-    
+
     client = MlflowClient()
     latest_versions = client.get_latest_versions(model_name, stages=["None"])
 

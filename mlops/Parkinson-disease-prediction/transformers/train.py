@@ -1,28 +1,39 @@
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, mean_squared_error, root_mean_squared_error
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    root_mean_squared_error,
+)
 import mlflow
-import os
 
 mlflow.set_tracking_uri("http://mlflow:5000")
 mlflow.set_experiment("parkinson-disease-prediction-experiment")
 
 
-if 'transformer' not in globals():
+if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
-if 'test' not in globals():
+if "test" not in globals():
     from mage_ai.data_preparation.decorators import test
 
 
 def get_metrics(y_val, y_pred):
-
     accuracy = accuracy_score(y_val, y_pred)
     precision = precision_score(y_val, y_pred)
     recall = recall_score(y_val, y_pred)
     f1 = f1_score(y_val, y_pred)
     rmse = root_mean_squared_error(y_val, y_pred)
 
-    return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1, 'rmse': rmse}
+    return {
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "rmse": rmse,
+    }
+
 
 @transformer
 def transform(data, *args, **kwargs):
@@ -40,7 +51,6 @@ def transform(data, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     with mlflow.start_run():
-
         mlflow.sklearn.autolog()
         mlflow.set_tag("Developer", "sanghvirajit")
         mlflow.set_tag("model", "LinearRegression")
@@ -48,8 +58,8 @@ def transform(data, *args, **kwargs):
         X_train, X_val, y_train, y_val = data
 
         # Dicts
-        train_dicts = X_train.to_dict(orient='records')
-        val_dicts = X_val.to_dict(orient='records')
+        train_dicts = X_train.to_dict(orient="records")
+        val_dicts = X_val.to_dict(orient="records")
 
         # DictVextorizer
         dv = DictVectorizer()
@@ -57,7 +67,7 @@ def transform(data, *args, **kwargs):
         X_val = dv.transform(val_dicts)
 
         # Loading the model
-        
+
         model = LinearRegression()
 
         # fit and train
@@ -76,7 +86,13 @@ def transform(data, *args, **kwargs):
         mlflow.log_metric("f1", metrics["f1"])
         mlflow.log_metric("rmse", metrics["rmse"])
 
-    return {'accuracy': metrics["accuracy"], 'precision': metrics["precision"], 'recall': metrics["recall"], 'f1': metrics["f1"], 'rmse': metrics["rmse"]}
+    return {
+        "accuracy": metrics["accuracy"],
+        "precision": metrics["precision"],
+        "recall": metrics["recall"],
+        "f1": metrics["f1"],
+        "rmse": metrics["rmse"],
+    }
 
 
 @test
@@ -84,4 +100,4 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    assert output is not None, 'The output is undefined'
+    assert output is not None, "The output is undefined"

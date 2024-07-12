@@ -57,7 +57,7 @@ def transform(data, *args, **kwargs):
         X_val = dv.transform(val_dicts)
 
         # Loading the model
-        
+
         model = LinearRegression()
 
         # fit and train
