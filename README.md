@@ -96,6 +96,8 @@ cd Parkinson-Disease---MLOps-Pipeline
 pip install -r requirements.txt
 ```
 
+# linting and formatting
+
 Best Practices are used for linting and formatting.
 All the dependencies are written in the requirements.ci.txt. Lint section is also added in the Makefile
 
