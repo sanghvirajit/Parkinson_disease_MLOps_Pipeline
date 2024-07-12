@@ -188,3 +188,13 @@ docker run -it --rm \
     -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
     parkinson-disease-prediction:latest
 ```
+
+test the docker using following command:
+
+```bash
+python test.py
+```
+
+it should give following results:
+
+![Example Image](assets/348293521-8733603d-2c78-4b20-90e1-c383665c573c.png)
