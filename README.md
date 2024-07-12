@@ -90,31 +90,31 @@ Prerequisite: Install Docker (Windows: Docker Desktop)
 
 Download repository from GitHub
 
-´´´bash
+```bash 
 git clone https://github.com/sanghvirajit/Parkinson-Disease---MLOps-Pipeline.git
 cd Parkinson-Disease---MLOps-Pipeline
 pip install -r requirements.txt
-´´´
+```
 
 Best Practices are used for linting and formatting. 
 All the dependencies are written in the requirements.ci.txt. Lint section is also added in the Makefile
 
 Run the following code to use it
 
-´´´bash
+```bash
 pip install -r requirements.ci.txt
 Make lint
-´´´
+```
 
 # AWS Cloud for streaming. 
 
 AWS credentials can be set as Enviromental Variables as follow
 
-´´´bash
+```bash
 export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
 export AWS_DEFAULT_REGION="AWS_DEFAULT_REGION"
-´´´
+```
 
 # MLFlow for Experiemental Tracking
 
@@ -126,18 +126,18 @@ export EXPERIMENT_NAME="parkinson-disease-prediction-experiment"
 
 To start the docker compose run the following commands in terminal
 
-´´´bash
+```bash
 ./scripts/start.sh
-´´´
+```
 
 The command will start the docker compose.
 
 ### Access individual services
 
-´´´bash
+```bash
 mage: http://localhost:6789
 mlflow: http://localhost:5000
-´´´
+```
 
 # Mage as Orchestration
 
@@ -159,23 +159,23 @@ The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bu
 
 save the RUN_ID of the best model as an enviroment variable
 
-´´´bash
+```bash
 export RUN_ID="6f4c13e86ae94d7a958349c35af3fbb1"
-´´´
+```
 
 ## Putting everything to Docker
 
 ### Configuring AWS CLI to run in Docker
 
-´´´´bash
+```bash
 export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
 export AWS_DEFAULT_REGION="YOUR_REGION"
-´´´
+```
 
 ### Build and Run Docker with all enviromental variables
 
-´´´´bash
+```bash
 docker build -t parkinson-disease-prediction:latest .
 
 docker run -it --rm \
@@ -185,4 +185,4 @@ docker run -it --rm \
     -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
     -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
     parkinson-disease-prediction:latest
-´´´
+```
