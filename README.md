@@ -106,6 +106,10 @@ pip install -r requirements.ci.txt
 Make lint
 ```
 
+It should give following results:
+
+![Example Image](assets/linter.png)
+
 # AWS Cloud for streaming.
 
 AWS credentials can be set as Enviromental Variables as follow
