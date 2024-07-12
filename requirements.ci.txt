@@ -1,0 +1,7 @@
+pre-commit
+mypy
+pytest
+pytest-asyncio
+pytest-cov
+detect-secrets
+uv

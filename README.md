@@ -160,7 +160,7 @@ The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bu
 save the RUN_ID of the best model as an enviroment variable
 
 ´´´bash
-export RUN_ID="8d0421d955ed465280492230e6e9e4e8"
+export RUN_ID="6f4c13e86ae94d7a958349c35af3fbb1"
 ´´´
 
 ## Putting everything to Docker

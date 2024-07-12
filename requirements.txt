@@ -1,0 +1,6 @@
+scikit-learn
+flask
+gunicorn
+mlflow
+boto3
+catboost
