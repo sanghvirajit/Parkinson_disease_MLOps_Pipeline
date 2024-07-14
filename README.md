@@ -326,11 +326,11 @@ SHARD_ITERATOR=$(aws kinesis \
         --stream-name ${KINESIS_STREAM_OUTPUT} \
         --query 'ShardIterator' \
 )
-```
 
 RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR)
 
 echo ${RESULT} | jq -r '.Records[0].Data' | base64 --decode | jq
+```
 
 ### Configure Enviromental Variables for Kinesis output stream
 
