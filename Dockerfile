@@ -9,7 +9,7 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY [ "predict.py", "./" ]
+COPY [ "model.py", "./" ]
 
 EXPOSE 9696
 
