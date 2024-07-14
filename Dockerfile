@@ -1,16 +1,11 @@
-FROM python:3.9.7-slim
+FROM public.ecr.aws/lambda/python:3.9
 
 RUN pip install -U pip
-RUN pip install pipenv
 
-WORKDIR /app
-
-COPY requirements.txt .
+COPY [ "requirements.txt", "./" ]
 
 RUN pip install -r requirements.txt
 
-COPY [ "model.py", "./" ]
+COPY [ "lambda_function.py", "./" ]
 
-EXPOSE 9696
-
-ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:9696", "predict:app" ]
+CMD [ "lambda_function.lambda_handler" ]
