@@ -32,6 +32,11 @@ def predict(test_data):
     processed_data = prepare_features(test_data)
     preds = loaded_model.predict(processed_data)
     return float(preds[0]), RUN_ID
+
+def base64_decode(encoded_data):
+    decoded_data = base64.b64decode(encoded_data).decode('utf-8')
+    parkinson_event = json.loads(decoded_data)
+    return parkinson_event
         
 def lambda_handler(event, context):
     
@@ -39,8 +44,8 @@ def lambda_handler(event, context):
     
     for record in event['Records']:
         encoded_data = record['kinesis']['data']
-        decoded_data = base64.b64decode(encoded_data).decode('utf-8')
-        parkinson_event = json.loads(decoded_data)
+        
+        parkinson_event = base64_decode(encoded_data)
         
         data = parkinson_event['data']
         patient_id = parkinson_event['patient_id']
@@ -51,7 +56,7 @@ def lambda_handler(event, context):
         if prediction == 1:
             parkinson_diseases_prediction = "Yes"
         else:
-            parkinson_diseases_prediction = "Yes"
+            parkinson_diseases_prediction = "No"
         
         prediction_event = {
                             "model": "parkinson_disease_prediction_model",

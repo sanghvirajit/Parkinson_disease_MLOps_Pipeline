@@ -5,20 +5,23 @@ import mlflow
 import pandas as pd
 import os
 
+RUN_ID = os.getenv("RUN_ID")
+
 def load_model(run_id):
     # Load model as a PyFuncModel using the RUN_ID
     logged_model = f"s3://s3-parkinson-disease-prediction/{run_id}/artifacts"
     loaded_model = mlflow.pyfunc.load_model(logged_model)
     return loaded_model
 
+# Load model once in memory
+loaded_model = load_model(RUN_ID)
+
 def prepare_features(data):
     processed_feature = pd.DataFrame(data, index=[0])
     return processed_feature
 
 def predict(test_data):
-    RUN_ID = os.getenv("RUN_ID")
     processed_data = prepare_features(test_data)
-    loaded_model = load_model(RUN_ID)
     preds = loaded_model.predict(processed_data)
     return float(preds[0]), RUN_ID
 
