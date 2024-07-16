@@ -20,6 +20,7 @@ def load_model(run_id):
     return loaded_model
 
 print("Loading model...")
+print(RUN_ID)
 # Load model once in memory
 loaded_model = load_model(RUN_ID)
 print("Model loaded succeefully from S3!")
