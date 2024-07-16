@@ -1,21 +1,19 @@
 from pathlib import Path
-
+import pickle
 import pandas as pd
 import json
-import pickle
 import os
-from model import prepare_features, load_model
-from lambda_function import base64_decode, lambda_handler
+from lambda_function import prepare_features, base64_decode, lambda_handler
 
 assets_path = Path(__file__).parent / "assets"
-model_path = Path(__file__).parent / "models/model.pkl"
-
-# with open(model_path, 'rb') as file:
-#     local_loaded_model = pickle.load(file)
+model_path = Path(__file__).parent / "../models/catboost_model.pkl"
 
 test_cases = assets_path.glob("*.txt")
 
-RUN_ID = os.getenv("RUN_ID")
+with open(model_path, 'rb') as file:
+    logged_model = pickle.load(file)
+
+#RUN_ID = os.getenv("RUN_ID")
 
 # Read text files
 def read_txt(file_path):
@@ -127,8 +125,8 @@ def test_jsonl_cases():
 
         # Predict
         processed_data = prepare_features(data_json)
-        s3_loaded_model = load_model(RUN_ID)
-        y_pred = s3_loaded_model.predict(processed_data)
+        #s3_loaded_model = load_model(RUN_ID)
+        y_pred = logged_model.predict(processed_data)
 
         assert int(ground_truth) == y_pred[0], f"Expected ground_truth {int(ground_truth)} but got {y_pred[0]} for test case {test_case_name}"
 
@@ -163,7 +161,7 @@ def test_lambda_handler():
                         'predictions':[
                                         {
                                         "model": "parkinson_disease_prediction_model",
-                                        "version": RUN_ID,
+                                        "version": "0dca9f9fb4124b71afc538844a08d40d",
                                         "prediction": {
                                                     "parkinson_diseases_prediction": "Yes", 
                                                     "patient_id": "9fa97825-a345-4068-a5d9-3fda607fc9b0"

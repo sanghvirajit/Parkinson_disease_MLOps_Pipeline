@@ -43,7 +43,7 @@ def transform(*args, **kwargs):
     run_id = best_run.info.run_id
     model_uri = f"runs:/{run_id}/model"
     model_accuracy = round(best_run.data.metrics["accuracy"] * 100)
-    model_details = mlflow.register_model(model_uri=model_uri, name=MODEL_NAME)
+    model_details = mlflow.register_model(model_uri=model_uri, name=EXPERIMENT_NAME)
     client.update_registered_model(
         name=model_details.name, description=f"Current accuracy: {model_accuracy}%"
     )

@@ -145,6 +145,7 @@ The command will start the docker compose.
 ```bash
 mage: http://localhost:6789
 mlflow: http://localhost:5000
+local_api: http://localhost:9696
 ```
 
 # Mage as Orchestration
@@ -178,7 +179,7 @@ The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bu
 save the RUN_ID of the best model as an enviroment variable
 
 ```bash
-export RUN_ID="6f4c13e86ae94d7a958349c35af3fbb1"
+export RUN_ID="0dca9f9fb4124b71afc538844a08d40d"
 ```
 
 ## Putting everything to Docker
@@ -263,7 +264,7 @@ aws kinesis put-record \
                   "SleepDisorders": "1",
                   "Constipation": "0"
                },
-            "patient_id": "39767a17-e85f-4655-81f4-2021c67f4e75"
+            "patient_id": "9fa97825-a345-4068-a5d9-3fda607fc9b0"
          }'
 ```
 

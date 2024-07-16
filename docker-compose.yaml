@@ -26,6 +26,7 @@ services:
       - magic-database
     stdin_open: true # used for interactive debugging
     tty: true # used for interactive debugging
+  
   magic-database:
     image: pgvector/pgvector:0.6.0-pg16
     env_file:
@@ -39,6 +40,7 @@ services:
     restart: always
     networks:
       - app-network
+  
   mlflow:
     build:
       context: .
@@ -49,6 +51,16 @@ services:
       - "${PWD}/mlflow:/home/mlflow/"
     networks:
       - app-network
+
+  local_api:
+    build:
+      context: .
+      dockerfile: local.dockerfile
+    ports:
+      - 9696:9696
+    networks:
+      - app-network
+          
 networks:
   app-network:
     driver: bridge
