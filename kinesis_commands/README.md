@@ -134,7 +134,7 @@ SHARD_ITERATOR=$(aws kinesis \
         --query 'ShardIterator' \
 )
 
-RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR)
+RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR --limit 100)
 
 echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 ```
@@ -142,7 +142,7 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 ### Configure Enviromental Variables for Kinesis output stream
 
 ```bash
-export PREDICTIONS_STREAM_NAME="parkinson-prediction-stream"
+export PREDICTIONS_STREAM_NAME="kinesis-output-stream"
 ```
 
 ### Running the docker with Lambda and Kinesis
@@ -178,7 +178,7 @@ Pushing
 
 ```bash
 REMOTE_URI="058264402883.dkr.ecr.eu-central-1.amazonaws.com/parkinson-disease-prediction-model"
-REMOTE_TAG="latest"
+REMOTE_TAG="v9"
 REMOTE_IMAGE=${REMOTE_URI}:${REMOTE_TAG}
 
 LOCAL_IMAGE="parkinson-disease-prediction:latest"

@@ -6,13 +6,10 @@ import os
 import pandas as pd
 import mlflow
 
-def load_model(run_id):
-    
-    # s3 bucket name
-    MODEL_BUCKET = os.getenv("MODEL_BUCKET")
+def load_model(run_id, model_bucket):
     
     # Load model as a PyFuncModel using the RUN_ID
-    model_location = f"s3://{MODEL_BUCKET}/{run_id}/artifacts"
+    model_location = f"s3://{model_bucket}/{run_id}/artifacts"
     
     # Load model
     print("Loading model...")
@@ -27,10 +24,10 @@ def base64_decode(encoded_data):
     return parkinson_event
 
 class ModelService:
-    def __init__(self, model, model_version=None, callbacks=None):
+    def __init__(self, model, model_version=None, prediction_stream_name=None):
         self.model = model
         self.model_version = model_version
-        self.callbacks = callbacks or []
+        self.prediction_stream_name = prediction_stream_name
 
     def prepare_features(self, data):
         processed_feature = pd.DataFrame(data, index=[0])
@@ -67,44 +64,19 @@ class ModelService:
                                         }
                             }
 
-            for callback in self.callbacks:
-                callback(prediction_event)
+            kinesis_client = boto3.client('kinesis')
+            kinesis_client.put_record(
+                                    StreamName=self.prediction_stream_name,
+                                    Data=json.dumps(prediction_event),
+                                    PartitionKey=str(patient_id)
+                                )
 
             predictions_events.append(prediction_event)
 
         return {'predictions': predictions_events}
 
-class KinesisCallback:
-    def __init__(self, kinesis_client, prediction_stream_name):
-        self.kinesis_client = kinesis_client
-        self.prediction_stream_name = prediction_stream_name
-
-    def put_record(self, prediction_event):
-        patient_id = prediction_event['prediction']['patient_id']
-
-        self.kinesis_client.put_record(
-            StreamName=self.prediction_stream_name,
-            Data=json.dumps(prediction_event),
-            PartitionKey=str(patient_id),
-        )
-
-def create_kinesis_client():
-    endpoint_url = os.getenv('KINESIS_ENDPOINT_URL')
-
-    if endpoint_url is None:
-        return boto3.client('kinesis')
-
-    return boto3.client('kinesis', endpoint_url=endpoint_url)
-
-def init(prediction_stream_name: str, run_id: str):
+def init(prediction_stream_name: str, run_id: str, model_bucket: str):
     
-    model = load_model(run_id)
-
-    callbacks = []
-    kinesis_client = create_kinesis_client()
-    kinesis_callback = KinesisCallback(kinesis_client, prediction_stream_name)
-    callbacks.append(kinesis_callback.put_record)
-
-    model_service = ModelService(model=model, model_version=run_id, callbacks=callbacks)
-
+    model = load_model(run_id, model_bucket)
+    model_service = ModelService(model=model, model_version=run_id, prediction_stream_name=prediction_stream_name)
     return model_service

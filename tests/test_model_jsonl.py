@@ -34,7 +34,7 @@ def test_jsonl_cases():
         data_json = json.loads(test_data)
 
         # Predict
-        model_service = model.ModelService(logged_model, "477e0bfee6964438991021bfa605a2ed")
+        model_service = model.ModelService(logged_model, "477e0bfee6964438991021bfa605a2ed", "kinesis-output-stream")
         processed_data = model_service.prepare_features(data_json)
         y_pred = logged_model.predict(processed_data)
 
@@ -88,7 +88,7 @@ def test_base64_decode():
 
 def test_prepare_feature():
 
-    model_service = model.ModelService(logged_model, "477e0bfee6964438991021bfa605a2ed")
+    model_service = model.ModelService(logged_model, "477e0bfee6964438991021bfa605a2ed", "kinesis-output-stream")
 
     test_data = {
                 'Age': 67,
@@ -134,7 +134,7 @@ def test_lambda_handler():
 
     data = "ewogICAgICAgICAgICAiZGF0YSI6IHsKICAgICAgICAgICAgICAgICAgIkFnZSI6IDY3LAogICAgICAgICAgICAgICAgICAiR2VuZGVyIjogIjEiLAogICAgICAgICAgICAgICAgICAiRXRobmljaXR5IjogIjIiLAogICAgICAgICAgICAgICAgICAiRWR1Y2F0aW9uTGV2ZWwiOiAiMSIsCiAgICAgICAgICAgICAgICAgICJCTUkiOiAyNC43NzI1OTQwMzQ1NzcyOCwKICAgICAgICAgICAgICAgICAgIlNtb2tpbmciOiAiMCIsCiAgICAgICAgICAgICAgICAgICJBbGNvaG9sQ29uc3VtcHRpb24iOiAxMy45NDEzODU3NDAzOTEwMDQsCiAgICAgICAgICAgICAgICAgICJQaHlzaWNhbEFjdGl2aXR5IjogMi40NzI1MzQzMjIzNTczOTksCiAgICAgICAgICAgICAgICAgICJEaWV0UXVhbGl0eSI6IDkuNTkzMzA5NzM5MTI4MzY5LAogICAgICAgICAgICAgICAgICAiU2xlZXBRdWFsaXR5IjogNi4wNjA5OTIxMjA1Nzc3MjUsCiAgICAgICAgICAgICAgICAgICJGYW1pbHlIaXN0b3J5UGFya2luc29ucyI6ICIwIiwKICAgICAgICAgICAgICAgICAgIlRyYXVtYXRpY0JyYWluSW5qdXJ5IjogIjAiLAogICAgICAgICAgICAgICAgICAiSHlwZXJ0ZW5zaW9uIjogIjEiLAogICAgICAgICAgICAgICAgICAiRGlhYmV0ZXMiOiAiMCIsCiAgICAgICAgICAgICAgICAgICJEZXByZXNzaW9uIjogIjAiLAogICAgICAgICAgICAgICAgICAiU3Ryb2tlIjogIjAiLAogICAgICAgICAgICAgICAgICAiU3lzdG9saWNCUCI6IDkyLAogICAgICAgICAgICAgICAgICAiRGlhc3RvbGljQlAiOiA2MCwKICAgICAgICAgICAgICAgICAgIkNob2xlc3Rlcm9sVG90YWwiOiAxOTMuMTM4MTg2ODEwNjI5NiwKICAgICAgICAgICAgICAgICAgIkNob2xlc3Rlcm9sTERMIjogMTM3LjUxNzU1MDM3NjIxMjgsCiAgICAgICAgICAgICAgICAgICJDaG9sZXN0ZXJvbEhETCI6IDI1LjQ4MjQ2NzAzNTgwNjgxMywKICAgICAgICAgICAgICAgICAgIkNob2xlc3Rlcm9sVHJpZ2x5Y2VyaWRlcyI6IDMxMy42NjY3NDg3NjkyNjk1MywKICAgICAgICAgICAgICAgICAgIlVQRFJTIjogNTguOTkwOTIwOTYzMzM3OTQsCiAgICAgICAgICAgICAgICAgICJNb0NBIjogMTkuOTAyMjMzNjE1NzE4MTQ2LAogICAgICAgICAgICAgICAgICAiRnVuY3Rpb25hbEFzc2Vzc21lbnQiOiA1LjEwNDkxNDQ4NDAyMDkwNSwKICAgICAgICAgICAgICAgICAgIlRyZW1vciI6ICIwIiwKICAgICAgICAgICAgICAgICAgIlJpZ2lkaXR5IjogIjEiLAogICAgICAgICAgICAgICAgICAiQnJhZHlraW5lc2lhIjogIjEiLAogICAgICAgICAgICAgICAgICAiUG9zdHVyYWxJbnN0YWJpbGl0eSI6ICIwIiwKICAgICAgICAgICAgICAgICAgIlNwZWVjaFByb2JsZW1zIjogIjAiLAogICAgICAgICAgICAgICAgICAiU2xlZXBEaXNvcmRlcnMiOiAiMSIsCiAgICAgICAgICAgICAgICAgICJDb25zdGlwYXRpb24iOiAiMCIKICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgInBhdGllbnRfaWQiOiAiOWZhOTc4MjUtYTM0NS00MDY4LWE1ZDktM2ZkYTYwN2ZjOWIwIgogICAgICAgICB9"
 
-    model_service = model.ModelService(logged_model, "477e0bfee6964438991021bfa605a2ed")
+    model_service = model.ModelService(logged_model, "477e0bfee6964438991021bfa605a2ed", "kinesis-output-stream")
 
     kinesis_event = {
                     "Records": [

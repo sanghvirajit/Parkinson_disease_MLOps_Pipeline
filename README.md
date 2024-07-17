@@ -266,14 +266,14 @@ aws kinesis put-record \
                   "SleepDisorders": "1",
                   "Constipation": "0"
                },
-            "patient_id": "9fa97825-a345-4068-a5d9-3fda607fc9b0"
+            "patient_id": "f5037e00-e640-4efe-9c25-fcf82cac969f"
          }'
 ```
 
 ### Reading the output from the stream
 
 ```bash
-KINESIS_STREAM_OUTPUT='parkinson-output-stream'
+KINESIS_STREAM_OUTPUT='kinesis-output-stream'
 SHARD='shardId-000000000000'
 
 SHARD_ITERATOR=$(aws kinesis \
