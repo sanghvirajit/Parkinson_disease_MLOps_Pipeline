@@ -23,12 +23,6 @@ latest_versions = client.get_latest_versions(MODEL_NAME, stages=["Production"])
 for version in latest_versions:
     RUN_ID = version.run_id
 
-print(RUN_ID)
-
-# logged_model = f'runs:/{RUN_ID}/model'
-# # Load model as a PyFuncModel.
-# loaded_model = mlflow.pyfunc.load_model(logged_model)
-
 def load_model(run_id):
     logged_model = f'runs:/{run_id}/model'
     # Load model as a PyFuncModel.

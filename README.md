@@ -190,6 +190,7 @@ export RUN_ID="477e0bfee6964438991021bfa605a2ed"
 export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
 export AWS_DEFAULT_REGION="YOUR_REGION"
+export MODEL_BUCKET="s3-parkinson-disease-prediction"
 ```
 
 ### Configure Enviromental Variables for Kinesis output stream
@@ -205,10 +206,11 @@ docker build -t parkinson-disease-prediction:latest .
 
 docker run -it --rm \
     -p 8080:8080 \
-    -e RUN_ID="${RUN_ID}" \
     -e AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}" \
     -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
     -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+    -e RUN_ID="${RUN_ID}" \
+    -e MODEL_BUCKET="${MODEL_BUCKET}" \
     -e PREDICTIONS_STREAM_NAME="${PREDICTIONS_STREAM_NAME}" \
     parkinson-disease-prediction:latest
 ```
