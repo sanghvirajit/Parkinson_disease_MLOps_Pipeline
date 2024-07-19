@@ -66,7 +66,16 @@ class ModelService:
                 },
             }
 
-            kinesis_client = boto3.client("kinesis")
+            kinesis_endpoint_url =  os.getenv('KINESIS_LOCALSTACK_URL')
+            if kinesis_endpoint_url is None:
+                kinesis_client = boto3.client("kinesis")
+            else:
+                kinesis_client = boto3.client("kinesis", 
+                                              endpoint_url=kinesis_endpoint_url, 
+                                              aws_access_key_id="fakeAccessKeyId",
+                                              aws_secret_access_key="fakeSecretAccessKey"
+                                            )
+
             kinesis_client.put_record(
                 StreamName=self.prediction_stream_name,
                 Data=json.dumps(prediction_event),

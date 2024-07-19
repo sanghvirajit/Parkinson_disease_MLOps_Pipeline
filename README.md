@@ -312,3 +312,18 @@ Once docker compose is up, try sending few local request (eg 10 recommended) usi
 ```bash
 python test_local.py
 ```
+
+```bash
+aws --endpoint-url=http://localhost:4566 kinesis list-streams
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis create-stream \
+    --stream-name parkinson-input-stream \
+    --shard-count 1
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis create-stream \
+    --stream-name kinesis-output-stream \
+    --shard-count 1
+
+```

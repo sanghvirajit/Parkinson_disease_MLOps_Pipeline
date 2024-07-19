@@ -32,7 +32,7 @@ print(f"Actual response: {json.dumps(actual_response, indent=2)}")
 expected_response = {
                         'predictions': [
                                     {'model': 'parkinson_disease_prediction_model', 
-                                        'version': '477e0bfee6964438991021bfa605a2ed', 
+                                        'version': 'integration_test', 
                                         'prediction': {
                                                         'parkinson_diseases_prediction': 'Yes', 
                                                         'patient_id': '9fa97825-a345-4068-a5d9-3fda607fc9b0'
