@@ -93,8 +93,8 @@ def transform(data, *args, **kwargs):
             mlflow.log_metric("rmse", metrics["rmse"])
 
             # Log the model manually
-            mlflow.catboost.log_model(  catboost, 
-                                        artifact_path="model", 
+            mlflow.catboost.log_model(  catboost,
+                                        artifact_path="model",
                                 )
 
         return {"loss": metrics["accuracy"], "status": STATUS_OK}

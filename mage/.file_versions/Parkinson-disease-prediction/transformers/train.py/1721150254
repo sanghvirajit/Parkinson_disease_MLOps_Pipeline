@@ -89,7 +89,7 @@ def transform(data, *args, **kwargs):
         mlflow.sklearn.log_model(
         python_model=model_path,  # Define the model as the path to the Python file
         artifact_path="my_model")
-        
+
     return {
         "accuracy": metrics["accuracy"],
         "precision": metrics["precision"],
