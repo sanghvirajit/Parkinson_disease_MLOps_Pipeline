@@ -3,9 +3,13 @@ from pathlib import Path
 
 from mlflow import MlflowClient
 import mlflow
+import time
 
 import pandas as pd
 import os
+
+from prometheus_client import make_wsgi_app, Counter, CollectorRegistry
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 MLFLOW_TRACKING_URI=os.getenv("MLFLOW_TRACKING_URI")
 MODEL_NAME=os.getenv("MODEL_NAME")
@@ -43,12 +47,15 @@ def predict(test_data):
     preds = loaded_model.predict(processed_data)
     return float(preds[0])
 
-app = Flask("parkinson-disease-prediction")
+app = Flask(__name__)
 
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/metrics': make_wsgi_app()
+})
 
-@app.route("/predict", methods=["POST"])
+@app.route("/predict")
 def predict_endpoint():
-    
+
     test_data = request.get_json()
     pred = predict(test_data)
 
@@ -60,7 +67,6 @@ def predict_endpoint():
     result = {"prediction": parkinson_diseases_prediction, "model_version": RUN_ID}
 
     return jsonify(result)
-
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=9696)

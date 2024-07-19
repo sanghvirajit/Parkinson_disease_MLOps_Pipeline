@@ -145,7 +145,9 @@ The command will start the docker compose.
 ```bash
 mage: http://localhost:6789
 mlflow: http://localhost:5000
-local_api: http://localhost:9696
+local_api (local testing): http://localhost:9696
+Prometheus: http://localhost:9090
+Grafana: http://localhost:3000
 ```
 
 # Mage as Orchestration
@@ -184,18 +186,13 @@ export RUN_ID="477e0bfee6964438991021bfa605a2ed"
 
 ## Putting everything to Docker
 
-### Configuring AWS CLI to run in Docker
+### Configuring AWS CLI to run in Docker and Kinesis output stream
 
 ```bash
 export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
 export AWS_DEFAULT_REGION="YOUR_REGION"
 export MODEL_BUCKET="s3-parkinson-disease-prediction"
-```
-
-### Configure Enviromental Variables for Kinesis output stream
-
-```bash
 export PREDICTIONS_STREAM_NAME="parkinson-output-stream"
 ```
 
@@ -290,3 +287,27 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 ```
 
 ![Example Image](assets/read_kinesis_output.png)
+
+# Monitoring
+
+Once you run the docker compose with following command
+
+```bash
+./scripts/start.sh
+```
+
+All the endpoints can be accessible as mentioned above.
+Prometheus and Grafana are integrated within the local development.
+
+Dashboard can be accessible at ```bash http://localhost:3000 ``` enter username/password as admin/admin.
+
+A dashboard is already saved and can be seen as follow:
+![Example Image](assets/grafana.png)
+
+Initially dashboad would be empty except CPU Usage and Momeory usage metrics.
+
+Once docker compose is up, try sending few local request (eg 10 recommended) using following command, and it will be reflected into the dashboad (wait for 15s and then refreash the dashboard)
+
+```bash
+python test_local.py
+```

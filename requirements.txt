@@ -12,3 +12,5 @@ xgboost==2.1.0
 flask
 gunicorn
 boto3
+prometheus-flask-exporter
+prometheus_fastapi_instrumentator
