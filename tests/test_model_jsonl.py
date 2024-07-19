@@ -5,14 +5,13 @@ import json
 import model
 
 assets_path = Path(__file__).parent / "assets"
-model_path = Path(__file__).parent / "../models/catboost_model.pkl"
+model_path = Path(__file__).parent / "../model/catboost_model.pkl"
 
 test_cases = assets_path.glob("*.txt")
 
 # Load model from the local dir to test the functions
 with open(model_path, "rb") as file:
     logged_model = pickle.load(file)
-
 
 # Read text files
 def read_txt(file_path):

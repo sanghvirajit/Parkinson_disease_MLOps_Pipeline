@@ -193,7 +193,7 @@ export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
 export AWS_DEFAULT_REGION="YOUR_REGION"
 export MODEL_BUCKET="s3-parkinson-disease-prediction"
-export PREDICTIONS_STREAM_NAME="parkinson-output-stream"
+export PREDICTIONS_STREAM_NAME="kinesis-output-stream"
 ```
 
 ### Running the docker with Lambda and Kinesis
@@ -206,20 +206,21 @@ docker run -it --rm \
     -e AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}" \
     -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
     -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+    -e MODEL_LOCATION="/app/model" \
     -e RUN_ID="${RUN_ID}" \
     -e MODEL_BUCKET="${MODEL_BUCKET}" \
     -e PREDICTIONS_STREAM_NAME="${PREDICTIONS_STREAM_NAME}" \
+    -v $(pwd)/model:/app/model \
     parkinson-disease-prediction:latest
 ```
-
-![Example Image](assets/run_docker.png)
 
 to test the docker, run the following command:
 
 ```bash
 python test_docker.py
 ```
-![Example Image](assets/test_docker.png)
+
+![Example Image](assets/run_docker.png)
 
 ### Sending actual data to kinesis stream
 

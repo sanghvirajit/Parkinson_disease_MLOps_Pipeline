@@ -5,18 +5,20 @@ import boto3
 import pandas as pd
 import mlflow
 
+import os 
 
 def load_model(run_id, model_bucket):
+
+    # Load model from the S3 or from local location
+    model_location = os.getenv('MODEL_LOCATION')
+
+    if model_location is not None:
+        return mlflow.pyfunc.load_model(model_location)
+     
     # Load model as a PyFuncModel using the RUN_ID
     model_location = f"s3://{model_bucket}/{run_id}/artifacts"
 
-    # Load model
-    print("Loading model...")
-    loaded_model = mlflow.pyfunc.load_model(model_location)
-    print("Model loaded succeefully from S3!")
-
-    return loaded_model
-
+    return mlflow.pyfunc.load_model(model_location)
 
 def base64_decode(encoded_data):
     decoded_data = base64.b64decode(encoded_data).decode("utf-8")
