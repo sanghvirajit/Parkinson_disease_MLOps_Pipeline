@@ -299,7 +299,7 @@ Once you run the docker compose with following command
 All the endpoints can be accessible as mentioned above.
 Prometheus and Grafana are integrated within the local development.
 
-Dashboard can be accessible at ```bash http://localhost:3000 ``` enter username/password as admin/admin.
+Dashboard can be accessible at ``` http://localhost:3000 ``` enter ``` username/password ``` as ``` admin/admin ```.
 
 A dashboard is already saved and can be seen as follow:
 ![Example Image](assets/grafana.png)
