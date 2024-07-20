@@ -31,7 +31,7 @@ aws --endpoint-url=http://localhost:4566 \
 
 sleep 5
 
-aws --endpoint-url=http://localhost:4566 s3 mb s3://${MODEL_BUCKET} 
+aws --endpoint-url=http://localhost:4566 s3 mb s3://${MODEL_BUCKET}
 aws --endpoint-url=http://localhost:4566 s3 sync ../model s3://${MODEL_BUCKET}/${RUN_ID}/artifacts/
 
 sleep 5

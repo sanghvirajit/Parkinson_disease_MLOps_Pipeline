@@ -5,10 +5,10 @@ import boto3
 import pandas as pd
 import mlflow
 
-import os 
+import os
+
 
 def load_model(run_id, model_bucket):
-    
     # # Option:1 load model from the local dir by specifiying the path to env var
     # # Load model from the S3 or from local location
     # model_location = os.getenv('MODEL_LOCATION')
@@ -20,13 +20,14 @@ def load_model(run_id, model_bucket):
     model_location = f"s3://{model_bucket}/{run_id}/artifacts"
 
     # Option:2 Load model from the s3 localstack by setting localstack endpoint in env var
-    localstack_endpoint_url =  os.getenv('LOCALSTACK_URL')
+    localstack_endpoint_url = os.getenv("LOCALSTACK_URL")
     if localstack_endpoint_url is not None:
-        os.environ['MLFLOW_S3_ENDPOINT_URL'] = os.getenv('LOCALSTACK_URL')
+        os.environ["MLFLOW_S3_ENDPOINT_URL"] = os.getenv("LOCALSTACK_URL")
         # Else from the main aws account
 
-    # Option3: Load model from aws s3       
+    # Option3: Load model from aws s3
     return mlflow.pyfunc.load_model(model_location)
+
 
 def base64_decode(encoded_data):
     decoded_data = base64.b64decode(encoded_data).decode("utf-8")
@@ -74,18 +75,19 @@ class ModelService:
                 },
             }
 
-            localstack_endpoint_url =  os.getenv('LOCALSTACK_URL')
+            localstack_endpoint_url = os.getenv("LOCALSTACK_URL")
             aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
             aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
             if localstack_endpoint_url is None:
                 # read from the aws kinesis
                 kinesis_client = boto3.client("kinesis")
             else:
-                kinesis_client = boto3.client("kinesis", 
-                                              endpoint_url=localstack_endpoint_url, 
-                                              aws_access_key_id=aws_access_key_id,
-                                              aws_secret_access_key=aws_secret_access_key
-                                            )
+                kinesis_client = boto3.client(
+                    "kinesis",
+                    endpoint_url=localstack_endpoint_url,
+                    aws_access_key_id=aws_access_key_id,
+                    aws_secret_access_key=aws_secret_access_key,
+                )
 
             kinesis_client.put_record(
                 StreamName=self.prediction_stream_name,

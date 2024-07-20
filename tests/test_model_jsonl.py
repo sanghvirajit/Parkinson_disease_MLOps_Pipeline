@@ -2,7 +2,7 @@ from pathlib import Path
 import pickle
 import pandas as pd
 import json
-import model
+from app import model
 
 assets_path = Path(__file__).parent / "assets"
 model_path = Path(__file__).parent / "../model/catboost_model.pkl"
@@ -12,6 +12,7 @@ test_cases = assets_path.glob("*.txt")
 # Load model from the local dir to test the functions
 with open(model_path, "rb") as file:
     logged_model = pickle.load(file)
+
 
 # Read text files
 def read_txt(file_path):
@@ -34,7 +35,7 @@ def test_jsonl_cases():
 
         # Predict
         model_service = model.ModelService(logged_model)
-        
+
         processed_data = model_service.prepare_features(data_json)
         y_pred = logged_model.predict(processed_data)
 
@@ -90,7 +91,6 @@ def test_base64_decode():
 
 
 def test_prepare_feature():
-
     model_service = model.ModelService(logged_model)
 
     test_data = {

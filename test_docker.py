@@ -1,7 +1,6 @@
 import requests
 import json
 
-from deepdiff import DeepDiff
 
 event = {
     "Records": [

@@ -309,7 +309,7 @@
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull"
+            "mean"
           ],
           "displayMode": "list",
           "placement": "bottom",
@@ -505,9 +505,7 @@
       "id": 16,
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
@@ -539,7 +537,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "3s",
+  "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {

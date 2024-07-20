@@ -30,19 +30,20 @@ actual_response = requests.post(url, json=event).json()
 print(f"Actual response: {json.dumps(actual_response, indent=2)}")
 
 expected_response = {
-                        'predictions': [
-                                    {'model': 'parkinson_disease_prediction_model', 
-                                        'version': "477e0bfee6964438991021bfa605a2ed", 
-                                        'prediction': {
-                                                        'parkinson_diseases_prediction': 'Yes', 
-                                                        'patient_id': '9fa97825-a345-4068-a5d9-3fda607fc9b0'
-                                                    }
-                                    }
-                                ]
-                    }
+    "predictions": [
+        {
+            "model": "parkinson_disease_prediction_model",
+            "version": "477e0bfee6964438991021bfa605a2ed",
+            "prediction": {
+                "parkinson_diseases_prediction": "Yes",
+                "patient_id": "9fa97825-a345-4068-a5d9-3fda607fc9b0",
+            },
+        }
+    ]
+}
 print(f"Expected response: {json.dumps(expected_response, indent=2)}")
 
 diff = DeepDiff(actual_response, expected_response)
 
-assert 'values_changed' not in diff
-assert 'type_changes' not in diff
+assert "values_changed" not in diff
+assert "type_changes" not in diff
