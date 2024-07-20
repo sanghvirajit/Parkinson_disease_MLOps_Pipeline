@@ -1,4 +1,4 @@
-import lambda_function
+from app import lambda_function
 
 event = {
     "Records": [

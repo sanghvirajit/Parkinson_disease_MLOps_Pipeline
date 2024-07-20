@@ -4,7 +4,7 @@ services:
       - .env.dev
     build:
       context: .
-      dockerfile: mage.dockerfile
+      dockerfile: app/mage/mage.dockerfile
     command: /app/run_app.sh mage start $PROJECT_NAME
     ports:
       - 6789:6789
@@ -44,7 +44,7 @@ services:
   mlflow:
     build:
       context: .
-      dockerfile: mlflow.dockerfile
+      dockerfile: app/mlflow/mlflow.dockerfile
     ports:
       - "5000:5000"
     volumes:
@@ -56,7 +56,7 @@ services:
   local_api:
     build:
       context: .
-      dockerfile: local.dockerfile
+      dockerfile: app/api/local.dockerfile
     ports:
       - 9696:9696
     networks:
