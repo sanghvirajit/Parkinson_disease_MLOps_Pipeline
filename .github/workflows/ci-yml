@@ -1,0 +1,30 @@
+name: CI-Tests
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies 
+        run: pip install -r requirements.txt
+      
+      - name: Install linter dependencies
+        run: pip install -r requirements.ci.txt
+
+      - name: Run unit tests
+        run:  pytest tests
+
+      - name: Lint
+        run:  pre-commit run --all-files
+
+      - name: Integration Test
+        run: LOCAL_IMAGE_NAME=parkinson-disease-prediction:latest cd integration_test && ./run.sh
