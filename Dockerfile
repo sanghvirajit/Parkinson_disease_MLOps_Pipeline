@@ -6,6 +6,6 @@ COPY ["requirements.txt", "./" ]
 
 RUN pip install -r requirements.txt
 
-COPY ["lambda_function.py", "model.py", "./" ]
+COPY ["app/lambda_function.py", "app/model.py", "./" ]
 
 CMD ["lambda_function.lambda_handler" ]

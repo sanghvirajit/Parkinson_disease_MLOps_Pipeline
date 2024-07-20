@@ -17,4 +17,4 @@ ENV MLFLOW_TRACKING_URI=http://mlflow:5000
 ENV MODEL_NAME="parkinson-disease-models"
 ENV EXPERIMENT_NAME="parkinson-disease-prediction-experiment"
 
-ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:9696", "local_api:app"]
+ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:9696", "local_api:app", "--timeout", "600"]

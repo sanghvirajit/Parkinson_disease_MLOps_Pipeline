@@ -5,8 +5,9 @@ import mlflow
 
 import pandas as pd
 import os
+import time
 
-from prometheus_client import make_wsgi_app
+from prometheus_client import make_wsgi_app, Counter, Histogram
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
@@ -25,7 +26,7 @@ latest_versions = client.get_latest_versions(MODEL_NAME, stages=["Production"])
 for version in latest_versions:
     RUN_ID = version.run_id
 
-
+print(RUN_ID)
 def load_model(run_id):
     logged_model = f"runs:/{run_id}/model"
     # Load model as a PyFuncModel.
@@ -52,20 +53,34 @@ def predict(test_data):
 
 app = Flask(__name__)
 
+# Prometheus metrics
+REQUEST_COUNT = Counter('request_count', 'App Request Count', ['method', 'endpoint'])
+REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request latency', ['endpoint'])
+PREDICTION_COUNT_YES = Counter('parkinson_disease_predictions_yes', 'Yes Count', ['method', 'endpoint'])
+PREDICTION_COUNT_NO = Counter('parkinson_disease_predictions_no', 'No Count', ['method', 'endpoint'])
+
 app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
 
 
-@app.route("/predict")
+@app.route("/predict", methods=['POST'])
 def predict_endpoint():
+    
+    start_time = time.time()
+    REQUEST_COUNT.labels(method='POST', endpoint='/predict').inc()
+
     test_data = request.get_json()
     pred = predict(test_data)
 
     if pred == 1:
         parkinson_diseases_prediction = "Yes"
+        PREDICTION_COUNT_YES.labels(method='POST', endpoint='/predict').inc()
     else:
         parkinson_diseases_prediction = "No"
+        PREDICTION_COUNT_NO.labels(method='POST', endpoint='/predict').inc()
 
     result = {"prediction": parkinson_diseases_prediction, "model_version": RUN_ID}
+
+    REQUEST_LATENCY.labels(endpoint='/predict').observe(time.time() - start_time)
 
     return jsonify(result)
 

@@ -305,6 +305,10 @@ Dashboard can be accessible at ``` http://localhost:3000 ``` enter ``` username/
 A dashboard is already saved and can be seen as follow:
 ![Example Image](assets/grafana.png)
 
+```bash
+http://localhost:3000/dashboard/snapshot/6t5VD3vSDKttyhRh0nhaoWKOOdiksZcB
+```
+
 Initially dashboad would be empty except CPU Usage and Momeory usage metrics.
 
 Once docker compose is up, try sending few local request (eg 10 recommended) using following command, and it will be reflected into the dashboad (wait for 15s and then refreash the dashboard)
