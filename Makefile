@@ -1,3 +1,6 @@
+LOCAL_TAG:=$(shell date +"%Y-%m-%d-%H-%M")
+LOCAL_IMAGE_NAME:=parkinson-disease-prediction:${LOCAL_TAG}
+
 .PHONY: lint
 ## Run linting
 lint:
@@ -9,7 +12,7 @@ test:
 	pytest tests
 
 
-.PHONY: test
+.PHONY: integration_test
 ## Run integration-tests
 integration_test:
-	LOCAL_IMAGE_NAME="parkinson-disease-prediction" bash integraton-test/run.sh
+	LOCAL_IMAGE_NAME=${LOCAL_IMAGE_NAME} cd integration_test && ./run.sh
