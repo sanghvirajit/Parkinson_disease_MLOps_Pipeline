@@ -40,6 +40,6 @@ sleep 5
 
 python test_docker.py
 
-sleep 5
+sleep 4
 
 docker-compose down
