@@ -5,10 +5,10 @@ if [[ -z "${GITHUB_ACTIONS}" ]]; then
 fi
 
 # image tag with date
-LOCAL_TAG=`date +"%Y-%m-%d-%H-%M"`
+# LOCAL_TAG=`date +"%Y-%m-%d-%H-%M"`
 
 # expose environmental variables
-export LOCAL_IMAGE_NAME="parkinson-disease-prediction:${LOCAL_TAG}"
+export LOCAL_IMAGE_NAME="parkinson-disease-prediction:latest"
 export AWS_DEFAULT_REGION="eu-central-1"
 export AWS_ACCESS_KEY_ID="fakeAccessKeyId"
 export AWS_SECRET_ACCESS_KEY="fakeSecretAccessKey"
