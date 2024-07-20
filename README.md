@@ -82,7 +82,11 @@ Symptoms
 
 # MLOps pipeline
 
-to be continued...
+![Example Image](assets/mlops.png)
+
+# AWS Deployment
+
+![Example Image](assets/aws.png)
 
 # How to use
 
