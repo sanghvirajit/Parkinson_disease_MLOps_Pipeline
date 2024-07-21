@@ -320,3 +320,7 @@ Once docker compose is up, try sending few local request (eg 10 recommended) usi
 ```bash
 python test_local.py
 ```
+
+# Integration Test
+
+![Example Image](assets/integration_test.png)
