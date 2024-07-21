@@ -94,8 +94,7 @@ pip install -r requirements.txt
 
 # linting and formatting
 
-Best Practices are used for linting and formatting.
-All the dependencies are written in the requirements.ci.txt. Lint section is also added in the Makefile
+All the dependencies for linter are written in the requirements.ci.txt. Lint section is also added in the Makefile.
 
 Run the following code to use it
 
@@ -111,14 +110,6 @@ It should give following results:
 # MLOps pipeline
 
 ![Example Image](assets/mlops.png)
-
-# MLFlow for Experiemental Tracking
-
-MLFlow experiment name can be set as enviromental variable before running docker compose, as it will be used by mage for storing ml experiements:
-
-```bash
-export EXPERIMENT_NAME="parkinson-disease-prediction-experiment"
-```
 
 ## Running the Docker Compose
 
@@ -142,7 +133,7 @@ Grafana: http://localhost:3000
 
 # Mage as Orchestration
 
-Mage is employed for the orchestration. Mage can be access at ```bash http://localhost:5000 ```. Under the Pipelines, 4 Pipelines for the training of Linear Regression, Logistic Regression, XGBoost and CatBoost are implemented.
+Mage is employed for the workflow orchestration. Mage can be accessible at ``` http://localhost:5000 ```. Under the Pipelines, 4 Pipelines for the training of Linear Regression, Logistic Regression, XGBoost and CatBoost models are implemented.
 
 ![Example Image](assets/348294696-c1a9f837-9fb3-4ff1-9c55-6a353e36a898.png)
 
@@ -150,7 +141,7 @@ Example pipeline blocks for the CatBoost Model:
 
 ![Example Image](assets/348294929-c01fb212-6915-404b-a1bb-36ef79ea5260.png)
 
-# MLFlow expriements
+# MLFlow for Experiemental Tracking
 
 Linear Regression, Logistic Regression, XGBoost and CatBoost models were tested. The main focus of the project was not to find the best model but to work on the best MLOps technologies so the best model amoung the 4 was choosen. CatBoost was not anyway giving bad results. The Accuracy of the CatBoost Model is 96% with RMSE of 0.20.
 
@@ -158,7 +149,7 @@ Mage is source in the MLFlow experiement tracking.
 
 ![Example Image](assets/348295413-ce88f6c8-ed77-441f-85a2-afb2f196006e.png)
 
-All the experiements were logged in the MLFLOW which can be access at ```bash http://localhost:5000 ```. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
+All the experiements were logged in the MLFLOW which can be access at ``` http://localhost:5000 ```. The Best Models among the XGBoost and CatBoost were registred with the MLFLow model registry.
 
 CatBoost Model can be find under "Production" tag and XGBoost Model can be find under "Staging".
 
@@ -166,22 +157,18 @@ CatBoost Model can be find under "Production" tag and XGBoost Model can be find 
 
 # Save the Artifacts of the best model from the MLFlow Registry to S3 Bucket on AWS
 
-The artifacts of the best model (CatBoost) was then loaded and save to the S3 Bucket of the AWS, from where it will be loaded later.
-
-save the RUN_ID of the best model as an enviroment variable
-
-```bash
-export RUN_ID="477e0bfee6964438991021bfa605a2ed"
-```
+The artifacts of the best model (CatBoost) was then loaded and save to the AWS S3 Bucket with it's run_id (eg. path run_id/artifacts) manually (can be find under app/notebook.ipynb), from where it will be loaded later during the cloud deployment.
 
 ## Putting everything to Docker
 
-### Configuring AWS CLI to run in Docker and Kinesis output stream
+### Configuring AWS and other environment variables
 
 ```bash
+export AWS_DEFAULT_REGION="YOUR_REGION"
 export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
-export AWS_DEFAULT_REGION="YOUR_REGION"
+
+export RUN_ID="477e0bfee6964438991021bfa605a2ed"
 export MODEL_BUCKET="s3-parkinson-disease-prediction"
 export PREDICTIONS_STREAM_NAME="kinesis-output-stream"
 ```
@@ -212,20 +199,13 @@ python test_docker.py
 
 ![Example Image](assets/run_docker.png)
 
-# Monitoring
+# Logging and Monitoring
 
-Once you run the docker compose with following command
+Prometheus is integrated for logging metrics, whichca be accessible ``` http://localhost:9090 ```.
+Grafrana is integrated for monitoring metrics, dashboard can be accessible at ``` http://localhost:3000 ```, enter ``` username/password ``` as ``` admin/admin ```.
 
-```bash
-./scripts/start.sh
-```
+A example dashboard with few panels is already saved,
 
-All the endpoints can be accessible as mentioned above.
-Prometheus and Grafana are integrated within the local development.
-
-Dashboard can be accessible at ``` http://localhost:3000 ``` enter ``` username/password ``` as ``` admin/admin ```.
-
-A dashboard is already saved and can be seen as follow:
 ![Example Image](assets/grafana.png)
 
 ```bash
@@ -244,6 +224,16 @@ python test_local.py
 
 ![Example Image](assets/integration_test.png)
 
+Localstack is used for the integration test. S3 and Kinesis are been setup in localstack for the end-to-end test.
+
+Model from the local dir will be saved under S3 localstack, from where it will loaded and records will be put on the output-kinesis stream under kinesis in localstack.
+
+to run the integration test, run the following command,
+
+```bash
+make integration_test
+```
+
 # AWS Deployment
 
 ![Example Image](assets/aws.png)
@@ -255,6 +245,8 @@ export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
 export AWS_DEFAULT_REGION="AWS_DEFAULT_REGION"
 ```
+
+![Example Image](assets/lambda.png)
 
 ### Sending actual data to kinesis stream
 
@@ -323,8 +315,21 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 
 ![Example Image](assets/read_kinesis_output.png)
 
-# Continuous Integration
+# IaC - Terraform
+
+Terraform has also been setup for deploying the services to AWS cloud. Only Staging environment will be deployed once run.
+Terraform plan has also been added under the CI pipeline.
+
+# Continuous Integration and Continuous Deployment
 
 ![Example Image](assets/CI.png)
 
+CI pipeline can be find under .github/ci.yml
+CI pipeline once triggered during a pull request, it will run the unit test (pytest), integartion test and terraform plan.
+
+example of how a successfull ci run looks like, more can be found under the github actions.
 ![Example Image](assets/ci_github.png)
+
+CD pipeline has been skipped in this project!
+
+Thank you!
