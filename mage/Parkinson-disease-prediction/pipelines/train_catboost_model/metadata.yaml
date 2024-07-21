@@ -61,7 +61,7 @@ blocks:
     file_source:
       path: Parkinson-disease-prediction/transformers/register_model.py
   downstream_blocks:
-  - transition_registered_model
+  - transition_registered_catboost_model
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -77,21 +77,22 @@ blocks:
 - all_upstream_blocks_executed: false
   color: null
   configuration:
+    file_path: Parkinson-disease-prediction/transformers/transition_registered_catboost_model.py
     file_source:
-      path: Parkinson-disease-prediction/transformers/transition_registered_model.py
+      path: Parkinson-disease-prediction/transformers/transition_registered_catboost_model.py
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: transition_registered_model
+  name: transition_registered_catboost_model
   retry_config: null
   status: updated
   timeout: null
   type: transformer
   upstream_blocks:
   - register_model
-  uuid: transition_registered_model
+  uuid: transition_registered_catboost_model
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

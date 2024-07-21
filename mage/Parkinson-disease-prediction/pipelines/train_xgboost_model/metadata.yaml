@@ -61,7 +61,7 @@ blocks:
     file_source:
       path: Parkinson-disease-prediction/transformers/register_model.py
   downstream_blocks:
-  - transition_registered_model
+  - transsition_registered_xgboost_model
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -78,20 +78,20 @@ blocks:
   color: null
   configuration:
     file_source:
-      path: Parkinson-disease-prediction/transformers/transition_registered_model.py
+      path: Parkinson-disease-prediction/transformers/transsition_registered_xgboost_model.py
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: transition_registered_model
+  name: transsition_registered_xgboost_model
   retry_config: null
   status: updated
   timeout: null
   type: transformer
   upstream_blocks:
   - register_model
-  uuid: transition_registered_model
+  uuid: transsition_registered_xgboost_model
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
