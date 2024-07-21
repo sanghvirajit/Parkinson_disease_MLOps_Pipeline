@@ -317,7 +317,7 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 
 # IaC - Terraform
 
-Terraform has also been setup for deploying the services to AWS cloud. Only Staging environment will be deployed once run.
+Terraform has also been used for provisioning the infrastructure. Only Staging environment will be deployed once run.
 Terraform plan has also been added under the CI pipeline.
 
 # Continuous Integration and Continuous Deployment
