@@ -80,17 +80,9 @@ Symptoms
 8. Diagnosis: Diagnosis status for Parkinson's Disease, where 0 indicates No and 1 indicates Yes.
 9. DoctorInCharge: This column contains confidential information about the doctor in charge, with "DrXXXConfid" as the value for all patients.
 
-# MLOps pipeline
-
-![Example Image](assets/mlops.png)
-
-# AWS Deployment
-
-![Example Image](assets/aws.png)
-
 # How to use
 
-Prerequisite: Install Docker (Windows: Docker Desktop)
+Prerequisite: Install Docker & Docker Compose
 
 Download repository from GitHub
 
@@ -116,15 +108,9 @@ It should give following results:
 
 ![Example Image](assets/linter.png)
 
-# AWS Cloud for streaming.
+# MLOps pipeline
 
-AWS credentials can be set as Enviromental Variables as follow
-
-```bash
-export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
-export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
-export AWS_DEFAULT_REGION="AWS_DEFAULT_REGION"
-```
+![Example Image](assets/mlops.png)
 
 # MLFlow for Experiemental Tracking
 
@@ -226,6 +212,50 @@ python test_docker.py
 
 ![Example Image](assets/run_docker.png)
 
+# Monitoring
+
+Once you run the docker compose with following command
+
+```bash
+./scripts/start.sh
+```
+
+All the endpoints can be accessible as mentioned above.
+Prometheus and Grafana are integrated within the local development.
+
+Dashboard can be accessible at ``` http://localhost:3000 ``` enter ``` username/password ``` as ``` admin/admin ```.
+
+A dashboard is already saved and can be seen as follow:
+![Example Image](assets/grafana.png)
+
+```bash
+http://localhost:3000/dashboard/snapshot/6t5VD3vSDKttyhRh0nhaoWKOOdiksZcB
+```
+
+Initially dashboad would be empty except CPU Usage and Momeory usage metrics.
+
+Once docker compose is up, try sending few local request (eg 10 recommended) using following command, and it will be reflected into the dashboad (wait for 15s and then refreash the dashboard)
+
+```bash
+python test_local.py
+```
+
+# Integration Test
+
+![Example Image](assets/integration_test.png)
+
+# AWS Deployment
+
+![Example Image](assets/aws.png)
+
+AWS credentials can be set as Enviromental Variables as follow
+
+```bash
+export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
+export AWS_DEFAULT_REGION="AWS_DEFAULT_REGION"
+```
+
 ### Sending actual data to kinesis stream
 
 ```bash
@@ -292,38 +322,6 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 ```
 
 ![Example Image](assets/read_kinesis_output.png)
-
-# Monitoring
-
-Once you run the docker compose with following command
-
-```bash
-./scripts/start.sh
-```
-
-All the endpoints can be accessible as mentioned above.
-Prometheus and Grafana are integrated within the local development.
-
-Dashboard can be accessible at ``` http://localhost:3000 ``` enter ``` username/password ``` as ``` admin/admin ```.
-
-A dashboard is already saved and can be seen as follow:
-![Example Image](assets/grafana.png)
-
-```bash
-http://localhost:3000/dashboard/snapshot/6t5VD3vSDKttyhRh0nhaoWKOOdiksZcB
-```
-
-Initially dashboad would be empty except CPU Usage and Momeory usage metrics.
-
-Once docker compose is up, try sending few local request (eg 10 recommended) using following command, and it will be reflected into the dashboad (wait for 15s and then refreash the dashboard)
-
-```bash
-python test_local.py
-```
-
-# Integration Test
-
-![Example Image](assets/integration_test.png)
 
 # Continuous Integration
 
