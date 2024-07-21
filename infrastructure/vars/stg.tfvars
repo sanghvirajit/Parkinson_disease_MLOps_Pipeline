@@ -1,0 +1,8 @@
+docker_image_local_path = "../Dockerfile"
+source_stream_name = "stg_source_stream"
+output_stream_name = "stg_output_stream"
+model_bucket = "s3"
+run_id = "477e0bfee6964438991021bfa605a2ed"
+ecr_repo_name = "stg_ecr"
+lambda_function_local_path = "../app/lambda_function.py"
+lambda_function_name = "stg_lambda"

@@ -1,3 +1,3 @@
 variable "bucket_name" {
-  description = "parkinson-diesease-prediction-s3"
+  description = "s3-parkinson-diesease-prediction-test"
 }
