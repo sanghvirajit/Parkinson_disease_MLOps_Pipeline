@@ -114,7 +114,7 @@ It should give following results:
 
 # MLFlow for Experiemental Tracking
 
-MLFlow experiment name can be set as enviromental variable as follow:
+MLFlow experiment name can be set as enviromental variable before running docker compose, as it will be used by mage for storing ml experiements:
 
 ```bash
 export EXPERIMENT_NAME="parkinson-disease-prediction-experiment"
