@@ -29,7 +29,7 @@ jobs:
       - name: Integration Test
         run: LOCAL_IMAGE_NAME=parkinson-disease-prediction:latest cd integration_test && ./run.sh
 
-tf-plan:
+  tf-plan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
