@@ -329,4 +329,4 @@ python test_local.py
 
 ![Example Image](assets/CI.png)
 
-![Example Image](assets/gi_github.png)
+![Example Image](assets/ci_github.png)
