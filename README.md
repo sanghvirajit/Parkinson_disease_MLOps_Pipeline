@@ -332,4 +332,5 @@ example of how a successfull ci run looks like, more can be found under the gith
 
 CD pipeline has been skipped in this project!
 
-Thank you!
+All the AWS resources will be deleted after the peer-review week.
+Thank you for evaluating the project!
