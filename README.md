@@ -324,3 +324,9 @@ python test_local.py
 # Integration Test
 
 ![Example Image](assets/integration_test.png)
+
+# Continuous Integration
+
+![Example Image](assets/CI.png)
+
+![Example Image](assets/gi_github.png)
