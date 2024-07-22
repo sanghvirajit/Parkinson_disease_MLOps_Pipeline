@@ -170,7 +170,7 @@ export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
 
 export RUN_ID="477e0bfee6964438991021bfa605a2ed"
 export MODEL_BUCKET="s3-parkinson-disease-prediction"
-export PREDICTIONS_STREAM_NAME="kinesis-output-stream"
+export PREDICTIONS_STREAM_NAME="parkinson-output-stream"
 ```
 
 ### Running the docker with Lambda and Kinesis

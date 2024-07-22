@@ -14,7 +14,7 @@ export AWS_ACCESS_KEY_ID="fakeAccessKeyId"
 export AWS_SECRET_ACCESS_KEY="fakeSecretAccessKey"
 export MODEL_BUCKET="s3-parkinson-disease-prediction"
 export RUN_ID="477e0bfee6964438991021bfa605a2ed"
-export PREDICTIONS_STREAM_NAME="kinesis-output-stream"
+export PREDICTIONS_STREAM_NAME="parkinson-output-stream"
 export LOCALSTACK_URL="http://localslack:4566/"
 
 docker build -t ${LOCAL_IMAGE_NAME} ..
