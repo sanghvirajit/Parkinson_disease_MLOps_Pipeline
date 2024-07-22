@@ -161,7 +161,7 @@ The artifacts of the best model (CatBoost) was then loaded and save to the AWS S
 
 ## Putting everything to Docker
 
-### Configuring AWS and other environment variables
+### Configuring AWS and environment variables
 
 ```bash
 export AWS_DEFAULT_REGION="YOUR_REGION"
@@ -328,6 +328,36 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 ```
 
 ![Example Image](assets/kinesis_output.png)
+
+### Test Lambda
+
+Lambda function can also be tested out by executing following command,
+
+```bash
+export PREDICTIONS_STREAM_NAME="parkinson-output-stream"
+python test_lambda.py
+```
+
+and then output in the kinesis stream can be checked by re-running,
+
+```bash
+KINESIS_STREAM_OUTPUT='parkinson-output-stream'
+SHARD='shardId-000000000000'
+
+SHARD_ITERATOR=$(aws kinesis \
+    get-shard-iterator \
+        --shard-id ${SHARD} \
+        --shard-iterator-type TRIM_HORIZON \
+        --stream-name ${KINESIS_STREAM_OUTPUT} \
+        --query 'ShardIterator' \
+)
+
+RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR)
+
+echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
+```
+
+![Example Image](assets/test_lambda.png)
 
 # IaC - Terraform
 
