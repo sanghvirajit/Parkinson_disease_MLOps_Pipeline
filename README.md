@@ -222,7 +222,7 @@ python test_local.py
 
 # Unit Test
 
-In this project, unit testing is implemented uniquely. Under the tests/assets directory, there are five test cases, each named {filename}_{groundtruth}.txt.
+In this project, unit testing is implemented uniquely. Under the tests/assets directory, there are five test cases, each named ``` {filename}_{groundtruth}.txt ```.
 
 With the model saved locally in the model/ directory, all five test cases are executed to ensure that the actual predictions match the provided ground truth. This approach guarantees that any updates to the model consistently pass these predefined test cases, maintaining reliability and accuracy.
 
