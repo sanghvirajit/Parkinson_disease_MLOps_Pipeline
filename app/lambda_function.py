@@ -1,5 +1,5 @@
 import os
-import model
+from app import model
 
 PREDICTIONS_STREAM_NAME = os.getenv("PREDICTIONS_STREAM_NAME")
 RUN_ID = os.getenv("RUN_ID")
