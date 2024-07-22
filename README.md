@@ -350,7 +350,7 @@ docker build -t parkinson-disease-prediction:latest .
 
 $(aws ecr get-login --no-include-email)
 
-REMOTE_URI="058264402883.dkr.ecr.eu-central-1.amazonaws.com/stg_ecr_parkinson-disease-prediction"
+REMOTE_URI="058264402883.dkr.ecr.eu-central-1.amazonaws.com/stg_parkinson_ecr_parkinson-disease-prediction"
 REMOTE_TAG="latest"
 REMOTE_IMAGE=${REMOTE_URI}:${REMOTE_TAG}
 
