@@ -332,7 +332,14 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 # IaC - Terraform
 
 Terraform has also been used for provisioning the infrastructure. Only Staging environment will be deployed once run.
-Terraform plan has also been added under the CI pipeline.
+Terraform can be executed with following commands and has also been added under the CI pipeline.
+
+```bash
+cd infrastructure
+terraform init
+terraform plan --var-file vars/stg.tfvars
+terraform apply --var-file vars/stg.tfvars
+```
 
 Note: While running terraform apply please make sure to uncomment the lambda function in the first run. (Please run only untill the ECR resource). We have to manually push any base image to the ECR because Lambda need atleast one image to pull. lambda config would fail without an existing Image URI in ECR.
 
