@@ -220,15 +220,29 @@ Once docker compose is up, try sending few local request (eg 10 recommended) usi
 python test_local.py
 ```
 
+# Unit Test
+
+In this project, unit testing is implemented uniquely. Under the tests/assets directory, there are five test cases, each named {filename}_{groundtruth}.txt.
+
+With the model saved locally in the model/ directory, all five test cases are executed to ensure that the actual predictions match the provided ground truth. This approach guarantees that any updates to the model consistently pass these predefined test cases, maintaining reliability and accuracy.
+
+To run the unit test, execute the following command:
+
+```bash
+make test
+```
+
+![Example Image](assets/unit_test.png)
+
 # Integration Test
 
 ![Example Image](assets/integration_test.png)
 
-Localstack is used for the integration test. S3 and Kinesis are been setup in localstack for the end-to-end test.
+Localstack is used for integration testing, with S3 and Kinesis set up within Localstack for end-to-end testing.
 
-Model from the local dir will be saved under S3 localstack, from where it will loaded and records will be put on the output-kinesis stream under kinesis in localstack.
+The model, stored locally, will be saved to S3 in Localstack. From there, it will be loaded, and records will be sent to the output-kinesis stream in Kinesis within Localstack.
 
-to run the integration test, run the following command,
+To run the integration test, execute the following command:
 
 ```bash
 make integration_test
@@ -319,6 +333,26 @@ echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 
 Terraform has also been used for provisioning the infrastructure. Only Staging environment will be deployed once run.
 Terraform plan has also been added under the CI pipeline.
+
+Note: While running terraform apply please make sure to uncomment the lambda function in the first run. (Please run only untill the ECR resource). We have to manually push any base image to the ECR because Lambda need atleast one image to pull. lambda config would fail without an existing Image URI in ECR.
+
+Please run the terraform apply without lambda resource, and push the base image manually by running following commands.
+
+```bash
+docker build -t parkinson-disease-prediction:latest .
+
+$(aws ecr get-login --no-include-email)
+
+REMOTE_URI="058264402883.dkr.ecr.eu-central-1.amazonaws.com/stg_ecr_parkinson-disease-prediction"
+REMOTE_TAG="latest"
+REMOTE_IMAGE=${REMOTE_URI}:${REMOTE_TAG}
+
+LOCAL_IMAGE="parkinson-disease-prediction:latest"
+docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}
+docker push ${REMOTE_IMAGE}
+```
+
+now please re-run the terraform apply with lambda resources.
 
 # Continuous Integration and Continuous Deployment
 
