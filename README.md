@@ -311,7 +311,7 @@ aws kinesis put-record \
 ### Reading the output from the stream
 
 ```bash
-KINESIS_STREAM_OUTPUT='kinesis-output-stream'
+KINESIS_STREAM_OUTPUT='parkinson-output-stream'
 SHARD='shardId-000000000000'
 
 SHARD_ITERATOR=$(aws kinesis \
@@ -327,7 +327,7 @@ RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR)
 echo ${RESULT} | jq -r '.Records[-1].Data' | base64 --decode | jq
 ```
 
-![Example Image](assets/read_kinesis_output.png)
+![Example Image](assets/kinesis_output.png)
 
 # IaC - Terraform
 
