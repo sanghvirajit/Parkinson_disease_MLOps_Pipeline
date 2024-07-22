@@ -9,7 +9,7 @@ lint:
 .PHONY: test
 ## Run tests
 test:
-	pytest tests
+	pytest unit_test
 
 
 .PHONY: integration_test
