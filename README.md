@@ -404,4 +404,4 @@ example of how a successfull ci run looks like, more can be found under the gith
 CD pipeline has been skipped in this project!
 
 All the AWS resources will be deleted after the peer-review week.
-Thank you for evaluating the project!
+If you find any problem in re-producing any results, please reach out to me at ``` sanghvirajit19@gmail.com ```. Thank you for evaluating the project! 
